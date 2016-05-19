@@ -21,6 +21,16 @@
             function ocultar(){
             document.getElementById('oculto').style.display = 'none';}
         </script>  
+        
+        <script type="text/javascript">
+            function mostrarAñadir(){
+            document.getElementById('añadir').style.display = 'table-row';}
+        </script> 
+        
+        <script type="text/javascript">
+            function ocultarAñadir(){
+            document.getElementById('añadir').style.display = 'none';}
+        </script> 
       
     </head>
     <body style="background-color: #afa;">
@@ -40,19 +50,59 @@
             </div>
             <table class="table table-hover">
                 <thead>
-                  <tr class="warning" >
-                    <th class="text-center">Código</th>
-                    <th class="text-center">Nombre</th>
-                    <th class="text-center">Categoria</th>
-                    <th class="text-center">Fabricante</th>
-                    <th class="text-center">Descripción</th>
-                    <th class="text-center col-lg-1">Precio de Compra</th>
-                    <th class="text-center col-lg-1">Precio de Venta</th>     
-                    <th class="text-center">Stock</th>  
-                  </tr>
+                    <tr class="warning" >
+                        <th class="text-center">Código</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Categoria</th>
+                        <th class="text-center">Fabricante</th>
+                        <th class="text-center">Descripción</th>
+                        <th class="text-center col-lg-1">Precio de Compra</th>
+                        <th class="text-center col-lg-1">Precio de Venta</th>     
+                        <th class="text-center">Stock</th>  
+                        <th> <!--Botón añadir que llama a la función mostrarAñadir-->
+                            <form method="get" action="#">
+                                <button type="submit" onclick="mostrarAñadir()" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-plus"></span>Añadir</button>
+                            </form>
+                        </th>
+                        <th>
+                            <button type="submit" onclick="ocultarAñadir()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></span>Cancelar</button>
+                        </th>
+                    </tr> 
+                    <form name="añadir" action="añadirArticulo.jsp" method="get">
+                        <tr id="añadir" style="display: none;" class="warning">  <!--Formulario para añadir artículos-->
+                            <td>
+                                 <input name="codigoArticulo" size="6" type="text">
+                            </td>
+
+                            <td>
+                                 <input name="nombreArticulo" size="14" type="text">
+                            </td>
+                            <td>
+                                 <input name="nombreCategoria" size="14" type="text">
+                            </td>
+                            <td>
+                                 <input name="fabricanteArticulo" size="14" type="text">
+                            </td>
+                            <td>
+                                <input name="descripcionArticulo" size="18" type="text">
+                            </td> 
+                            <td>
+                                <input name="precioCompraArticulo" size="4" type="text">
+                            </td>
+                            <td>
+                                <input name="precioVentaArticulo" size="4" type="text">
+                            </td>
+                            <td>
+                                <input name="stockArticulo" size="4" type="text">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>   
+                            </td>
+                        </tr>
+                    </form> 
                 </thead>
                 
-                <tbody class="text-center">
+                <tbody class="text-center"><!--Listado de artículos-->
                     <%
                     while (listado.next()) {
                         out.println("<tr><td class=success>");
@@ -65,7 +115,7 @@
                         out.println("<td class=success>" + listado.getString("precioVentaArticulo") + "</td>");
                         out.println("<td class=info>" + listado.getString("stockArticulo") + "</td>");
                     %>
-                    <td class=success>
+                    <td class=success> <!--Obtiene todo los datos de cada artículo para después modificar-->
                         <form method="get" action="modificaArticulo.jsp">
                             <input type="hidden" name="codigoArticulo" value="<%=listado.getString("codigoArticulo") %>">
                             <input type="hidden" name="nombreArticulo" value="<%=listado.getString("nombreArticulo") %>">
@@ -79,7 +129,8 @@
                         </form>
                     </td>
  
-                    <td class=info> <!--boton eliminar y formulario borrado-->
+                    <td class=info> <!--boton eliminar. Llama a la función mostrar pasando como parametro
+                        el codigo del articulo.-->
                         
                         <form method="get" action="#">
                             <button type="submit" onclick="mostrar(<%=listado.getString("codigoArticulo") %>)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
@@ -90,8 +141,10 @@
                     </td></tr>
                 </tbody>      
             </table>
-                    
-             <div  class="alert alert-danger fade in text-center" id=oculto style="display: none; position: fixed; top: 120px; left:488px; ">
+            <!--Cuadro de advertencia de borrado de un articulo. 
+            Tiene un botón para eliminar (confirma el borrado) y otro para cancenlar que llama a la 
+            función ocultar.-->   
+             <div  class="alert alert-danger fade in text-center" id="oculto" style="display: none; position: fixed; top: 120px; left:488px; ">
                 <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>Cuidado!</strong> ¿Está seguro de borrar el artículo? 
                 <br>
                 <form method="get" action="borraArticulo.jsp" style="display: inline-block;">
@@ -101,7 +154,7 @@
                     
                     <button type="submit" onclick="ocultar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
             </div>
-        </div>
+            
 
     </body>
 </html>
