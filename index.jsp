@@ -23,7 +23,7 @@
         </script>  
         
         <script type="text/javascript">
-            function mostrarAñadir(){
+            function mostrarAñadir(){//Table-row es para que no meta todo en una misma columna
             document.getElementById('añadir').style.display = 'table-row';}
         </script> 
         
@@ -31,6 +31,13 @@
             function ocultarAñadir(){
             document.getElementById('añadir').style.display = 'none';}
         </script> 
+        
+         <script type="text/javascript">
+            function mostrarModificar(codigoArticulo){
+                document.getElementById('modificar').style.display = 'table-row';
+                document.getElementById('codigoArticulo').value = codigoArticulo;
+            }
+        </script>
       
     </head>
     <body style="background-color: #afa;">
@@ -38,7 +45,6 @@
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda_informatica","root", "root");
             Statement s = conexion.createStatement();
-            ResultSet listado = s.executeQuery ("SELECT codigoArticulo, nombreArticulo, nombreCategoria, fabricanteArticulo, descripcionArticulo, precioCompraArticulo, precioVentaArticulo, stockArticulo FROM articulo ar,categoria ca WHERE ca.codCategoria = ar.categoriaArticulo");  
         %>
         
         <div class="container">
@@ -46,7 +52,7 @@
             <br>
             <div class="panel panel-primary">
                 <div class="panel-heading text-center"><h2>Gestión de artículos</h2></div>
-                <div class="panel-footer text-center">Listado</div>
+                <div class="panel-footer text-center">Listado, Alta, Modificación y Borrado</div>
             </div>
             <table class="table table-hover">
                 <thead>
@@ -68,20 +74,33 @@
                             <button type="submit" onclick="ocultarAñadir()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></span>Cancelar</button>
                         </th>
                     </tr> 
-                    <form name="añadir" action="añadirArticulo.jsp" method="get">
+                    <form name="añadir" action="altaArticulo.jsp" method="get">
                         <tr id="añadir" style="display: none;" class="warning">  <!--Formulario para añadir artículos-->
                             <td>
-                                 <input name="codigoArticulo" size="6" type="text">
+                                <input name="codigoArticulo" size="4" type="text">
                             </td>
 
                             <td>
-                                 <input name="nombreArticulo" size="14" type="text">
+                                <input name="nombreArticulo" size="12" type="text">
+                            </td>
+                            <td> <!--Consulta para el Select-->
+                                <% 
+                                ResultSet listadoCategorias = s.executeQuery("SELECT distinct ca.nombreCategoria, ar.categoriaArticulo FROM categoria ca, articulo ar WHERE ca.codCategoria = ar.categoriaArticulo");
+
+                                    out.print("<select name=\"Categoria\">");
+                                    
+                                    while (listadoCategorias.next()) {
+                                     
+                                     out.print("<option value=\"" + listadoCategorias.getString("categoriaArticulo") +
+                                       "\" " + "> " + listadoCategorias.getString("nombreCategoria") + "</option>");
+                                    
+                                    }
+                                    out.print("</select>");
+
+                                %>
                             </td>
                             <td>
-                                 <input name="nombreCategoria" size="14" type="text">
-                            </td>
-                            <td>
-                                 <input name="fabricanteArticulo" size="14" type="text">
+                                <input name="fabricanteArticulo" size="13" type="text">
                             </td>
                             <td>
                                 <input name="descripcionArticulo" size="18" type="text">
@@ -96,12 +115,15 @@
                                 <input name="stockArticulo" size="4" type="text">
                             </td>
                             <td>
-                                <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>   
+                                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span>Añadir</button>   
                             </td>
                         </tr>
                     </form> 
                 </thead>
                 
+                <%  
+                    ResultSet listado = s.executeQuery ("SELECT codigoArticulo, nombreArticulo, nombreCategoria, fabricanteArticulo, descripcionArticulo, precioCompraArticulo, precioVentaArticulo, stockArticulo, categoriaArticulo FROM articulo ar,categoria ca WHERE ca.codCategoria = ar.categoriaArticulo ORDER BY 1"); 
+                %>
                 <tbody class="text-center"><!--Listado de artículos-->
                     <%
                     while (listado.next()) {
@@ -137,6 +159,7 @@
                         </form>
                 <%
                     }
+                    
                 %>
                     </td></tr>
                 </tbody>      
