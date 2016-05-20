@@ -28,16 +28,30 @@
         </script> 
         
         <script type="text/javascript">
+            function mostrarModificar(codigoArticulo,nombreArticulo,nombreCategoria,
+            fabricanteArticulo,descripcionArticulo,precioComprateArticulo,
+            precioVentaArticulo,stockArticulo){
+                //Table-row es para que no meta todo en una misma columna
+            document.getElementById('modificar').style.display = 'table-row';
+            document.getElementById('codigoArticuloMod').value = codigoArticulo;
+            document.getElementById('nombreArticuloMod').value = nombreArticulo;
+            document.getElementsById('categoriasMod').value = nombreCategoria;
+            document.getElementsById('fabricanteArticuloMod').value = fabricanteArticulo;
+            document.getElementsById('descripcionArticuloMod').value = descripcionArticulo;
+            document.getElementsById('precioCompraArticuloMod').value = precioComprateArticulo;
+            document.getElementsById('precioVentaArticuloMod').value = precioVentaArticulo;
+            document.getElementsById('stockArticuloMod').value = stockArticulo;  
+         }
+        </script> 
+        <script type="text/javascript">
+            function ocultarModificar(){//Table-row es para que no meta todo en una misma columna
+            document.getElementById('modificar').style.display = 'none';}
+        </script>
+        
+        <script type="text/javascript">
             function ocultarAñadir(){
             document.getElementById('añadir').style.display = 'none';}
         </script> 
-        
-         <script type="text/javascript">
-            function mostrarModificar(codigoArticulo){
-                document.getElementById('modificar').style.display = 'table-row';
-                document.getElementById('codigoArticulo').value = codigoArticulo;
-            }
-        </script>
       
     </head>
     <body style="background-color: #afa;">
@@ -45,8 +59,9 @@
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda_informatica","root", "root");
             Statement s = conexion.createStatement();
+            request.setCharacterEncoding("UTF-8");
         %>
-        
+
         <div class="container">
             <br>
             <br>
@@ -70,10 +85,7 @@
                                 <button type="submit" onclick="mostrarAñadir()" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-plus"></span>Añadir</button>
                             </form>
                         </th>
-                        <th>
-                            <button type="submit" onclick="ocultarAñadir()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></span>Cancelar</button>
-                        </th>
-                    </tr> 
+                    </tr> <!--Formulario de alta de artículos-->
                     <form name="añadir" action="altaArticulo.jsp" method="get">
                         <tr id="añadir" style="display: none;" class="warning">  <!--Formulario para añadir artículos-->
                             <td>
@@ -85,13 +97,13 @@
                             </td>
                             <td> <!--Consulta para el Select-->
                                 <% 
-                                ResultSet listadoCategorias = s.executeQuery("SELECT distinct ca.nombreCategoria, ar.categoriaArticulo FROM categoria ca, articulo ar WHERE ca.codCategoria = ar.categoriaArticulo");
+                                ResultSet listadoCategorias = s.executeQuery("SELECT codCategoria, nombreCategoria FROM categoria ORDER BY nombreCategoria");
 
                                     out.print("<select name=\"Categoria\">");
                                     
                                     while (listadoCategorias.next()) {
                                      
-                                     out.print("<option value=\"" + listadoCategorias.getString("categoriaArticulo") +
+                                     out.print("<option value=\"" + listadoCategorias.getString("codCategoria") +
                                        "\" " + "> " + listadoCategorias.getString("nombreCategoria") + "</option>");
                                     
                                     }
@@ -100,10 +112,10 @@
                                 %>
                             </td>
                             <td>
-                                <input name="fabricanteArticulo" size="13" type="text">
+                                <input name="fabricanteArticulo" size="12" type="text">
                             </td>
                             <td>
-                                <input name="descripcionArticulo" size="18" type="text">
+                                <input name="descripcionArticulo" size="16" type="text">
                             </td> 
                             <td>
                                 <input name="precioCompraArticulo" size="4" type="text">
@@ -117,8 +129,60 @@
                             <td>
                                 <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span>Añadir</button>   
                             </td>
-                        </tr>
+                        
                     </form> 
+                            <td>
+                                 <button type="submit" onclick="ocultarAñadir()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</button>
+                            </td>
+                        </tr><!--Fin formilario alta de artículo-->
+                    <!--Formulario para añadir artículos-->
+                    <form name="modificar" action="modificaArticulo.jsp" method="get">
+                        <tr id="modificar" style="display: none;" class="warning">  
+                            <td>
+                                <input type="hidden" id="codigoArticuloMod" name="codigoArticulo"  size="4" value="">
+                            </td>
+
+                            <td>
+                                <input id="nombreArticuloMod" name="nombreArticulo" size="12" type="text" value="">
+                            </td>
+                            <td> <!--Consulta para el Select-->
+                                <% 
+                                    listadoCategorias.beforeFirst();
+                                    out.print("<select id=\"categoriasMod\" name=\"Categoria\">");
+                                    
+                                    while (listadoCategorias.next()) {
+                                     
+                                     out.print("<option value=\"" + listadoCategorias.getString("codCategoria") +
+                                       "\" " + "> " + listadoCategorias.getString("nombreCategoria") + "</option>");
+                                    
+                                    }
+                                    out.print("</select>");
+                                %>
+                            </td>
+                            <td>
+                                <input id="fabricanteArticuloMod" name="fabricanteArticulo" size="12" type="text" value="">
+                            </td>
+                            <td>
+                                <input id="descripcionArticuloMod" name="descripcionArticulo" size="16" type="text" value="">
+                            </td> 
+                            <td>
+                                <input id="precioCompraArticuloMod" name="precioCompraArticulo" size="4" type="text" value="">
+                            </td>
+                            <td>
+                                <input id="precioVentaArticuloMod" name="precioVentaArticulo" size="4" type="text" value="">
+                            </td>
+                            <td>
+                                <input ID="stockArticuloMOD" name="stockArticulo" size="4" type="text" value="">
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span>Modificar</button>   
+                            </td>
+                        
+                    </form> 
+                            <td>
+                                <button type="submit" onclick="ocultarModificar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</button>
+                            </td>
+                        </tr>
                 </thead>
                 
                 <%  
@@ -147,7 +211,16 @@
                             <input type="hidden" name="precioCompraArticulo" value="<%=listado.getString("precioCompraArticulo") %>">
                             <input type="hidden" name="precioVentaArticulo" value="<%=listado.getString("precioVentaArticulo") %>">
                             <input type="hidden" name="stockArticulo" value="<%=listado.getString("stockArticulo") %>">
-                            <button type="submit"  class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
+                        </form>
+                        <form name="modificar" action="#">
+                             <button type="submit" onclick="mostrarModificar('<%=listado.getString("codigoArticulo") %>',
+                                         '<%=listado.getString("nombreArticulo") %>',
+                                         '<%=listado.getString("nombreCategoria") %>',
+                                         '<%=listado.getString("fabricanteArticulo") %>',
+                                         '<%=listado.getString("precioCompraArticulo") %>',
+                                         '<%=listado.getString("precioVentaArticulo") %>',
+                                         '<%=listado.getString("stockArticulo") %>')" 
+                                         class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
                         </form>
                     </td>
  
@@ -172,7 +245,7 @@
                 <br>
                 <form method="get" action="borraArticulo.jsp" style="display: inline-block;">
                     <input id ="codigoArticulo" type="hidden" name="codigoArticulo" value="">
-                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>   
+                    <button style="margin-right: 90px;" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>   
                 </form>
                     
                     <button type="submit" onclick="ocultar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
