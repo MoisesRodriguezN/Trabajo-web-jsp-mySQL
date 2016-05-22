@@ -24,6 +24,9 @@
             
             if (listadoArticulo.getRow() != 0) {
                 out.println("Ya existe un artículo con el código: " + request.getParameter("codigoArticulo") + ". Alta no realizada.");
+                %>
+                <script>setTimeout("location.href='gestion.jsp'", 3000)</script>
+            <%   
             }else{
                 
                 String insercion = "INSERT INTO articulo  VALUES ('" + Integer.valueOf(request.getParameter("codigoArticulo")) + 
@@ -34,11 +37,16 @@
                   "', '" + Integer.valueOf(request.getParameter("precioCompraArticulo")) +
                   "', '" + Integer.valueOf(request.getParameter("precioVentaArticulo")) + 
                   "', '" + Integer.valueOf(request.getParameter("stockArticulo")) + "')";
-                s.execute(insercion);  
-
+                s.execute(insercion); 
+             
+                %>
+                     <script>document.location = "gestion.jsp"</script> 
+                    
+             
+        <%
             }
         %>
         
-        <script>document.location = "index.jsp"</script> 
+      
     </body>
 </html>

@@ -29,6 +29,6 @@
 
                 conexion.close();
         %>
-        <script>document.location = "index.jsp"</script> 
+        <script>document.location = "gestion.jsp"</script> 
     </body>
 </html>

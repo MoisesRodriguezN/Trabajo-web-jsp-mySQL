@@ -1,277 +1,70 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Listado de artículos</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+        <title>Login</title>
+        <LINK REL=StyleSheet HREF="estilosLogin.css" TYPE="text/css" MEDIA=screen>
         <script type="text/javascript">
-            function mostrar(codigoArticulo){
+            function f1(){
                 document.getElementById('oculto').style.display = 'block';
-                document.getElementById('codigoArticulo').value = codigoArticulo;
             }
         </script>
-        <script type="text/javascript">
-            function ocultar(){
-            document.getElementById('oculto').style.display = 'none';}
-        </script>  
-        
-        <script type="text/javascript">
-            function mostrarAñadir(){//Table-row es para que no meta todo en una misma columna
-            document.getElementById('añadir').style.display = 'table-row';}
-        </script> 
-        
-        <script type="text/javascript">
-            function mostrarModificar(codigoArticuloModificar,nombreArticuloModificar,fabricanteArticuloModificar,descripcionArticuloModificar,precioCompraArticuloModificar,precioVentaArticuloModificar,stockArticuloModificar,categoriaArticuloModificar){
-                //Table-row es para que no meta todo en una misma columna
-            document.getElementById('modificar').style.display = 'table-row';
-            document.getElementById('codigoArticuloModificar').value = codigoArticuloModificar;
-            document.getElementById('nombreArticuloModificar').value = nombreArticuloModificar;
-            document.getElementById('fabricanteArticuloModificar').value = fabricanteArticuloModificar;
-            document.getElementById('descripcionArticuloModificar').value = descripcionArticuloModificar;
-            document.getElementById('precioCompraArticuloModificar').value = precioCompraArticuloModificar;
-            document.getElementById('precioVentaArticuloModificar').value = precioVentaArticuloModificar;
-            document.getElementById('stockArticuloModificar').value = stockArticuloModificar;
-            document.getElementById('categoriaArticuloModificar').value = categoriaArticuloModificar;
- 
-         }
-        </script> 
-        <script type="text/javascript">
-            function ocultarModificar(){//Table-row es para que no meta todo en una misma columna
-            document.getElementById('modificar').style.display = 'none';}
-        </script>
-        
-        <script type="text/javascript">
-            function ocultarAñadir(){
-            document.getElementById('añadir').style.display = 'none';}
-        </script> 
-      
     </head>
-    <body style="background-color: #afa;">
+    <body>
         <%
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda_informatica","root", "root");
-            Statement s = conexion.createStatement();
-            request.setCharacterEncoding("UTF-8");
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda_informatica","root", "root");
+        Statement s = conexion.createStatement();
         %>
-
-        <div class="container">
-            <br>
-            <br>
-            <div class="panel panel-primary">
-                <div class="panel-heading text-center"><h2>Gestión de artículos</h2></div>
-                <div class="panel-footer text-center">Listado, Alta, Modificación y Borrado</div>
-            </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr class="warning" >
-                        <th class="text-center">Código</th>
-                        <th class="text-center">Nombre</th>
-                        <th class="text-center">Categoria</th>
-                        <th class="text-center">Fabricante</th>
-                        <th class="text-center">Descripción</th>
-                        <th class="text-center col-lg-1">Precio de Compra</th>
-                        <th class="text-center col-lg-1">Precio de Venta</th>     
-                        <th class="text-center">Stock</th>  
-                        <th> <!--Botón añadir que llama a la función mostrarAñadir-->
-                            <form method="get" action="#">
-                                <button type="submit" onclick="mostrarAñadir()" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-plus"></span>Añadir</button>
-                            </form>
-                        </th>
-                    </tr> <!--Formulario de alta de artículos-->
-                    <form name="añadir" action="altaArticulo.jsp" method="get">
-                        <tr id="añadir" style="display: none;" class="warning">  <!--Formulario para añadir artículos-->
-                            <td>
-                                <input name="codigoArticulo" size="4" type="text">
-                            </td>
-
-                            <td>
-                                <input name="nombreArticulo" size="12" type="text">
-                            </td>
-                            <td> <!--Consulta para el Select-->
-                                <% 
-                                ResultSet listadoCategorias = s.executeQuery("SELECT codCategoria, nombreCategoria FROM categoria ORDER BY nombreCategoria");
-
-                                    out.print("<select name=\"Categoria\">");
-                                    
-                                    while (listadoCategorias.next()) {
-                                     
-                                     out.print("<option value=\"" + listadoCategorias.getString("codCategoria") +
-                                       "\" " + "> " + listadoCategorias.getString("nombreCategoria") + "</option>");
-                                    
-                                    }
-                                    out.print("</select>");
-
-                                %>
-                            </td>
-                            <td>
-                                <input name="fabricanteArticulo" size="12" type="text">
-                            </td>
-                            <td>
-                                <input name="descripcionArticulo" size="16" type="text">
-                            </td> 
-                            <td>
-                                <input name="precioCompraArticulo" size="4" type="text">
-                            </td>
-                            <td>
-                                <input name="precioVentaArticulo" size="4" type="text">
-                            </td>
-                            <td>
-                                <input name="stockArticulo" size="4" type="text">
-                            </td>
-                            <td>
-                                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span>Añadir</button>   
-                            </td>
-                        
-                    </form> 
-                            <td>
-                                 <button type="submit" onclick="ocultarAñadir()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</button>
-                            </td>
-                        </tr><!--Fin formilario alta de artículo-->
-                    <!--Formulario para añadir artículos-->
-                    <form name="modificar" action="modificaArticulo.jsp" method="get">
-                        <tr id="modificar" style="display: none;" class="warning">  
-                            <td>
-                                <input type="hidden" id="codigoArticuloModificar" name="codigoArticuloMod"  size="4" value="">
-                            </td>
-
-                            <td>
-                                <input id="nombreArticuloModificar" name="nombreArticuloMod" size="12" type="text" value="">
-                            </td>
-                            
-                             <td> <!--Consulta para el Select-->
-                                <% 
-                                    listadoCategorias.beforeFirst();
-                                    
-                                    out.print("<select name=\"Categoria\" id=\"categoriaArticuloModificar\" value=\"\">");
-                                    
-                                    while (listadoCategorias.next()) {
-                                     out.print("<option value=\"" + listadoCategorias.getString("codCategoria") +
-                                       "\" " + "> " + listadoCategorias.getString("nombreCategoria") + "</option>");
-                                    
-                                    }
-                                    out.print("</select>");
-
-                                %>
-                            </td>
-                            
-                            <td>
-                                <input id="fabricanteArticuloModificar" name="fabricanteArticuloMod" size="12" type="text" value="">
-                            </td>
-                            
-                            <td>
-                                <input id="descripcionArticuloModificar" name="descripcionArticuloMod" size="16" type="text" value="">
-                            </td>
-                            
-                            <td>
-                                <input id="precioCompraArticuloModificar" name="precioCompraArticuloMod" size="4" type="text" value="">
-                            </td>
-                            
-                            <td>
-                                <input id="precioVentaArticuloModificar" name="precioVentaArticuloMod" size="4" type="text" value="">
-                            </td>
-                            
-                            <td>
-                                <input id="stockArticuloModificar" name="stockArticuloMod" size="4" type="text" value="">
-                            </td>
-                            
-                            <td>
-                                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>   
-                            </td>
-
-                    </form> 
-                            <td>
-                                <button type="submit" onclick="ocultarModificar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</button>
-                            </td>
-                        </tr>
-                </thead>
-                <!--Buscador de artículos-->
-                <form name="buscar" method="get" action="index.jsp">
-                    Búsqueda: 
-                    <input type="text" name="buscar" placeholder="Nombre del Artículo...">
-                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Buscar</button>
-                </form>
-
-                <%  
-                    String buscar = "";
+    <div class="container">
+        <div class="card card-container">
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <p id="profile-name" class="profile-name-card"></p>
+            <form class="form-signin" name="formularioLogin" method="post" action="index.jsp">
+                <span id="reauth-email" class="reauth-email"></span>
+                <input type="hidden" value="1" name="campoAux">
+                <input type="text" id="inputEmail" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
+                <input type="password" id="inputPassword" name="clave" class="form-control" placeholder="Contraseña" required>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Iniciar sesión</button>
+            </form>
+        <div id="oculto" style="display: none;">
+            <span style="color: red">Usuario o clave incorrecto</span>
+        </div>
+        
+        <div>
+            <%  //si los campos no están vacios se realiza consulta con usuario y clave
+                if(request.getParameter("campoAux") != null){
+                    String usuario = request.getParameter("usuario");
+                    String clave = request.getParameter("clave");
+                    //Devuelve una fila si existe y se contará la fila ( 0 ó 1)
+                    String consulta = "SELECT * FROM acceso WHERE usuarioAcceso = " + "\'" + usuario + "\' " + "AND " + "claveAcceso= " + "\'" + clave + "\'";
+                    ResultSet listado = s.executeQuery(consulta);
+                    listado.next();
+                    int cuentaFilas = listado.getRow();
                     
-                    if(request.getParameter("buscar") == null){
-                      buscar = " ";
+                    //Si el usuario o claves son incorrecto, se mostrará un aviso
+                    //Si son correctos, se llevará a la página de gestión.
+                    if(cuentaFilas == 0){
+                        %>      
+                            <body onload=f1();>
+                        <%
                     }else{
-                      buscar= request.getParameter("buscar");
+                        %>      
+                            <script>document.location = "gestion.jsp"</script> 
+                        <%
                     }
-                    ResultSet listado = s.executeQuery ("SELECT codigoArticulo, nombreArticulo, nombreCategoria, fabricanteArticulo, descripcionArticulo, precioCompraArticulo, precioVentaArticulo, stockArticulo, categoriaArticulo, codCategoria FROM articulo ar,categoria ca WHERE ca.codCategoria = ar.categoriaArticulo and ar.nombreArticulo like '%" + buscar + "%' " + "ORDER BY codigoArticulo"); 
-                %>
-                <tbody class="text-center"><!--Listado de artículos-->
-                    <%
-                    while (listado.next()) {
-                        out.println("<tr><td class=success>");
-                        out.println(listado.getString("codigoArticulo") + "</td>");
-                        out.println("<td class=info>" + listado.getString("nombreArticulo") + "</td>");
-                        out.println("<td class=success>" + listado.getString("nombreCategoria") + "</td>");
-                        out.println("<td class=info>" + listado.getString("fabricanteArticulo") + "</td>");
-                        out.println("<td class=success>" + listado.getString("descripcionArticulo") + "</td>");
-                        out.println("<td class=info>" + listado.getString("precioCompraArticulo") + "</td>");
-                        out.println("<td class=success>" + listado.getString("precioVentaArticulo") + "</td>");
-                        out.println("<td class=info>" + listado.getString("stockArticulo") + "</td>");
-                    %>
-                    <td class=success> <!--Obtiene todo los datos de cada artículo para después modificar-->
-                        <form method="get" action="modificaArticulo.jsp">
-                            <input type="hidden" name="codigoArticulo" value="<%=listado.getString("codigoArticulo") %>">
-                            <input type="hidden" name="nombreArticulo" value="<%=listado.getString("nombreArticulo") %>">
-                            <input type="hidden" name="nombreCategoria" value="<%=listado.getString("nombreCategoria") %>">
-                            <input type="hidden" name="fabricanteArticulo" value="<%=listado.getString("fabricanteArticulo") %>">
-                            <input type="hidden" name="descripcionArticulo" value="<%=listado.getString("descripcionArticulo") %>">
-                            <input type="hidden" name="precioCompraArticulo" value="<%=listado.getString("precioCompraArticulo") %>">
-                            <input type="hidden" name="precioVentaArticulo" value="<%=listado.getString("precioVentaArticulo") %>">
-                            <input type="hidden" name="stockArticulo" value="<%=listado.getString("stockArticulo") %>">
-                        </form>
-                        <form name="modificar" action="#">
-                            <button type="submit" onclick="mostrarModificar('<%=listado.getString("codigoArticulo") %>',
-                                '<%=listado.getString("nombreArticulo") %>',
-                                '<%=listado.getString("fabricanteArticulo") %>',
-                                '<%=listado.getString("descripcionArticulo") %>',
-                                '<%=listado.getString("precioCompraArticulo") %>',
-                                '<%=listado.getString("precioVentaArticulo") %>',
-                                '<%=listado.getString("stockArticulo") %>',
-                                '<%=listado.getString("codCategoria")%>')" 
-                                class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
-                        </form>
-                    </td>
- 
-                    <td class=info> <!--boton eliminar. Llama a la función mostrar pasando como parametro
-                        el codigo del articulo.-->
-                        
-                        <form method="get" action="#">
-                            <button type="submit" onclick="mostrar(<%=listado.getString("codigoArticulo") %>)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
-                        </form>
-                <%
-                    }
-                    
-                %>
-                    </td></tr>
-                </tbody>      
-            </table>
-            <!--Cuadro de advertencia de borrado de un articulo. 
-            Tiene un botón para eliminar (confirma el borrado) y otro para cancenlar que llama a la 
-            función ocultar.-->   
-             <div  class="alert alert-danger fade in text-center" id="oculto" style="display: none; position: fixed; top: 120px; left:488px; ">
-                <span class="glyphicon glyphicon-exclamation-sign"></span> <strong>Cuidado!</strong> ¿Está seguro de borrar el artículo? 
-                <br>
-                <form method="get" action="borraArticulo.jsp" style="display: inline-block;">
-                    <input id ="codigoArticulo" type="hidden" name="codigoArticulo" value="">
-                    <button style="margin-right: 90px;" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>   
-                </form>
-                    
-                    <button type="submit" onclick="ocultar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
-            </div>
-            
-
+                  
+                }else{
+                  
+                }
+                
+            %>
+        </div>
+    </div>
     </body>
 </html>
