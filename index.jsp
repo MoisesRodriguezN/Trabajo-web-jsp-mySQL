@@ -28,19 +28,18 @@
         </script> 
         
         <script type="text/javascript">
-            function mostrarModificar(codigoArticulo,nombreArticulo,nombreCategoria,
-            fabricanteArticulo,descripcionArticulo,precioComprateArticulo,
-            precioVentaArticulo,stockArticulo){
+            function mostrarModificar(codigoArticuloModificar,nombreArticuloModificar,fabricanteArticuloModificar,descripcionArticuloModificar,precioCompraArticuloModificar,precioVentaArticuloModificar,stockArticuloModificar,categoriaArticuloModificar){
                 //Table-row es para que no meta todo en una misma columna
             document.getElementById('modificar').style.display = 'table-row';
-            document.getElementById('codigoArticuloMod').value = codigoArticulo;
-            document.getElementById('nombreArticuloMod').value = nombreArticulo;
-            document.getElementsById('categoriasMod').value = nombreCategoria;
-            document.getElementsById('fabricanteArticuloMod').value = fabricanteArticulo;
-            document.getElementsById('descripcionArticuloMod').value = descripcionArticulo;
-            document.getElementsById('precioCompraArticuloMod').value = precioComprateArticulo;
-            document.getElementsById('precioVentaArticuloMod').value = precioVentaArticulo;
-            document.getElementsById('stockArticuloMod').value = stockArticulo;  
+            document.getElementById('codigoArticuloModificar').value = codigoArticuloModificar;
+            document.getElementById('nombreArticuloModificar').value = nombreArticuloModificar;
+            document.getElementById('fabricanteArticuloModificar').value = fabricanteArticuloModificar;
+            document.getElementById('descripcionArticuloModificar').value = descripcionArticuloModificar;
+            document.getElementById('precioCompraArticuloModificar').value = precioCompraArticuloModificar;
+            document.getElementById('precioVentaArticuloModificar').value = precioVentaArticuloModificar;
+            document.getElementById('stockArticuloModificar').value = stockArticuloModificar;
+            document.getElementById('categoriaArticuloModificar').value = categoriaArticuloModificar;
+ 
          }
         </script> 
         <script type="text/javascript">
@@ -139,54 +138,75 @@
                     <form name="modificar" action="modificaArticulo.jsp" method="get">
                         <tr id="modificar" style="display: none;" class="warning">  
                             <td>
-                                <input type="hidden" id="codigoArticuloMod" name="codigoArticulo"  size="4" value="">
+                                <input type="hidden" id="codigoArticuloModificar" name="codigoArticuloMod"  size="4" value="">
                             </td>
 
                             <td>
-                                <input id="nombreArticuloMod" name="nombreArticulo" size="12" type="text" value="">
+                                <input id="nombreArticuloModificar" name="nombreArticuloMod" size="12" type="text" value="">
                             </td>
-                            <td> <!--Consulta para el Select-->
+                            
+                             <td> <!--Consulta para el Select-->
                                 <% 
                                     listadoCategorias.beforeFirst();
-                                    out.print("<select id=\"categoriasMod\" name=\"Categoria\">");
+                                    
+                                    out.print("<select name=\"Categoria\" id=\"categoriaArticuloModificar\" value=\"\">");
                                     
                                     while (listadoCategorias.next()) {
-                                     
                                      out.print("<option value=\"" + listadoCategorias.getString("codCategoria") +
                                        "\" " + "> " + listadoCategorias.getString("nombreCategoria") + "</option>");
                                     
                                     }
                                     out.print("</select>");
+
                                 %>
                             </td>
+                            
                             <td>
-                                <input id="fabricanteArticuloMod" name="fabricanteArticulo" size="12" type="text" value="">
+                                <input id="fabricanteArticuloModificar" name="fabricanteArticuloMod" size="12" type="text" value="">
                             </td>
+                            
                             <td>
-                                <input id="descripcionArticuloMod" name="descripcionArticulo" size="16" type="text" value="">
-                            </td> 
-                            <td>
-                                <input id="precioCompraArticuloMod" name="precioCompraArticulo" size="4" type="text" value="">
+                                <input id="descripcionArticuloModificar" name="descripcionArticuloMod" size="16" type="text" value="">
                             </td>
+                            
                             <td>
-                                <input id="precioVentaArticuloMod" name="precioVentaArticulo" size="4" type="text" value="">
+                                <input id="precioCompraArticuloModificar" name="precioCompraArticuloMod" size="4" type="text" value="">
                             </td>
+                            
                             <td>
-                                <input ID="stockArticuloMOD" name="stockArticulo" size="4" type="text" value="">
+                                <input id="precioVentaArticuloModificar" name="precioVentaArticuloMod" size="4" type="text" value="">
                             </td>
+                            
                             <td>
-                                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span>Modificar</button>   
+                                <input id="stockArticuloModificar" name="stockArticuloMod" size="4" type="text" value="">
                             </td>
-                        
+                            
+                            <td>
+                                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>   
+                            </td>
+
                     </form> 
                             <td>
                                 <button type="submit" onclick="ocultarModificar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</button>
                             </td>
                         </tr>
                 </thead>
-                
+                <!--Buscador de artículos-->
+                <form name="buscar" method="get" action="index.jsp">
+                    Búsqueda: 
+                    <input type="text" name="buscar" placeholder="Nombre del Artículo...">
+                    <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Buscar</button>
+                </form>
+
                 <%  
-                    ResultSet listado = s.executeQuery ("SELECT codigoArticulo, nombreArticulo, nombreCategoria, fabricanteArticulo, descripcionArticulo, precioCompraArticulo, precioVentaArticulo, stockArticulo, categoriaArticulo FROM articulo ar,categoria ca WHERE ca.codCategoria = ar.categoriaArticulo ORDER BY 1"); 
+                    String buscar = "";
+                    
+                    if(request.getParameter("buscar") == null){
+                      buscar = " ";
+                    }else{
+                      buscar= request.getParameter("buscar");
+                    }
+                    ResultSet listado = s.executeQuery ("SELECT codigoArticulo, nombreArticulo, nombreCategoria, fabricanteArticulo, descripcionArticulo, precioCompraArticulo, precioVentaArticulo, stockArticulo, categoriaArticulo, codCategoria FROM articulo ar,categoria ca WHERE ca.codCategoria = ar.categoriaArticulo and ar.nombreArticulo like '%" + buscar + "%' " + "ORDER BY codigoArticulo"); 
                 %>
                 <tbody class="text-center"><!--Listado de artículos-->
                     <%
@@ -213,14 +233,15 @@
                             <input type="hidden" name="stockArticulo" value="<%=listado.getString("stockArticulo") %>">
                         </form>
                         <form name="modificar" action="#">
-                             <button type="submit" onclick="mostrarModificar('<%=listado.getString("codigoArticulo") %>',
-                                         '<%=listado.getString("nombreArticulo") %>',
-                                         '<%=listado.getString("nombreCategoria") %>',
-                                         '<%=listado.getString("fabricanteArticulo") %>',
-                                         '<%=listado.getString("precioCompraArticulo") %>',
-                                         '<%=listado.getString("precioVentaArticulo") %>',
-                                         '<%=listado.getString("stockArticulo") %>')" 
-                                         class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
+                            <button type="submit" onclick="mostrarModificar('<%=listado.getString("codigoArticulo") %>',
+                                '<%=listado.getString("nombreArticulo") %>',
+                                '<%=listado.getString("fabricanteArticulo") %>',
+                                '<%=listado.getString("descripcionArticulo") %>',
+                                '<%=listado.getString("precioCompraArticulo") %>',
+                                '<%=listado.getString("precioVentaArticulo") %>',
+                                '<%=listado.getString("stockArticulo") %>',
+                                '<%=listado.getString("codCategoria")%>')" 
+                                class="btn btn-info"><span class="glyphicon glyphicon-pencil"></span> Modificar</button>
                         </form>
                     </td>
  

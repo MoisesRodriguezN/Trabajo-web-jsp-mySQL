@@ -17,14 +17,14 @@
         Statement s = conexion.createStatement();
       
       
-       String actualizacion = "UPDATE articulo SET " + "nombreArticulo='" + (request.getParameter("nombreArticulo")) + 
+       String actualizacion = "UPDATE articulo SET " + "nombreArticulo='" + (request.getParameter("nombreArticuloMod")) + 
                 "',categoriaArticulo='" + Integer.valueOf(request.getParameter("Categoria")) +
-                "',fabricanteArticulo='" + (request.getParameter("fabricanteArticulo")) +
-                "',descripcionArticulo='" + (request.getParameter("descripcionArticulo")) +
-                "',precioCompraArticulo='" + Integer.valueOf(request.getParameter("precioCompraArticulo")) +
-                "',precioVentaArticulo='" + Integer.valueOf(request.getParameter("precioVentaArticulo")) + 
-                "',stockArticulo='" + Integer.valueOf(request.getParameter("stockArticulo")) + 
-                "' WHERE codigoArticulo='" +  + Integer.valueOf(request.getParameter("codigoArticulo")) + "\'";
+                "',fabricanteArticulo='" + (request.getParameter("fabricanteArticuloMod")) +
+                "',descripcionArticulo='" + (request.getParameter("descripcionArticuloMod")) +
+                "',precioCompraArticulo='" + (request.getParameter("precioCompraArticuloMod")) +
+                "',precioVentaArticulo='" + (request.getParameter("precioVentaArticuloMod")) + 
+                "',stockArticulo='" + Integer.valueOf(request.getParameter("stockArticuloMod")) + 
+                "' WHERE codigoArticulo='" +  + Integer.valueOf(request.getParameter("codigoArticuloMod")) + "\'";
                 s.execute(actualizacion);
 
                 conexion.close();
