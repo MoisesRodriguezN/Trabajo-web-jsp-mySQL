@@ -84,7 +84,7 @@
                     <form name="alta" action="altaArticulo.jsp" method="get">
                         <tr id="alta" style="display: none;" class="warning">  <!--Formulario para añadir artículos-->
                             <td>
-                                <input name="codigoArticulo" size="4" type="text">
+                                <input name="codigoArticulo" min="0" type="number" style="width: 60px;" >
                             </td>
 
                             <td>
@@ -113,13 +113,13 @@
                                 <input name="descripcionArticulo" size="16" type="text">
                             </td> 
                             <td>
-                                <input name="precioCompraArticulo" size="4" type="text">
+                                <input name="precioCompraArticulo" min="0" step="0.01" type="number" style="width: 60px;">
                             </td>
                             <td>
-                                <input name="precioVentaArticulo" size="4" type="text">
+                                <input name="precioVentaArticulo" min="0" step="0.01" type="number" style="width: 60px;">
                             </td>
                             <td>
-                                <input name="stockArticulo" size="4" type="text">
+                                <input name="stockArticulo" min="0" step="1" type="number" style="width: 60px;">
                             </td>
                             <td>
                                 <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-plus"></span>Añadir</button>   
@@ -134,7 +134,7 @@
                     <form name="modificar" action="modificaArticulo.jsp" method="get">
                         <tr id="modificar" style="display: none;" class="warning">  
                             <td>
-                                <input type="hidden" id="codigoArticuloModificar" name="codigoArticuloMod"  size="4" value="">
+                                <input type="hidden" id="codigoArticuloModificar" name="codigoArticuloMod"  value="">
                             </td>
 
                             <td>
@@ -166,15 +166,15 @@
                             </td>
                             
                             <td>
-                                <input id="precioCompraArticuloModificar" name="precioCompraArticuloMod" size="4" type="text" value="">
+                                <input id="precioCompraArticuloModificar" name="precioCompraArticuloMod" value="" min="0" step="0.01" type="number" style="width: 60px;">
                             </td>
                             
                             <td>
-                                <input id="precioVentaArticuloModificar" name="precioVentaArticuloMod" size="4" type="text" value="">
+                                <input id="precioVentaArticuloModificar" name="precioVentaArticuloMod" value="" min="0" step="0.01" type="number" style="width: 60px;">
                             </td>
                             
                             <td>
-                                <input id="stockArticuloModificar" name="stockArticuloMod" size="4" type="text" value="">
+                                <input id="stockArticuloModificar" name="stockArticuloMod" min="0" step="1" type="number" style="width: 60px;">
                             </td>
                             
                             <td>

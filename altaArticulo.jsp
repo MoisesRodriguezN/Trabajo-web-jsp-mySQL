@@ -34,8 +34,8 @@
                   "', '" + Integer.valueOf(request.getParameter("Categoria")) +
                   "', '" + (request.getParameter("fabricanteArticulo")) +
                   "', '" + (request.getParameter("descripcionArticulo")) +
-                  "', '" + Integer.valueOf(request.getParameter("precioCompraArticulo")) +
-                  "', '" + Integer.valueOf(request.getParameter("precioVentaArticulo")) + 
+                  "', '" + Double.valueOf(request.getParameter("precioCompraArticulo")) +
+                  "', '" + Double.valueOf(request.getParameter("precioVentaArticulo")) + 
                   "', '" + Integer.valueOf(request.getParameter("stockArticulo")) + "')";
                 s.execute(insercion); 
              
