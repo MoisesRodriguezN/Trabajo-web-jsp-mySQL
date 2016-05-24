@@ -11,43 +11,6 @@
         <title>Listado de artículos</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-      
-        <script>
-            function mostrarEliminar(codigoArticulo){ //Para borrar artículos
-                document.getElementById('oculto').style.display = 'block';
-                document.getElementById('codigoArticulo').value = codigoArticulo;
-            }
-
-            function ocultarEliminar(){
-            document.getElementById('oculto').style.display = 'none';}
-
-            function mostrarAlta(){//Table-row es para que no meta todo en una misma columna
-            document.getElementById('alta').style.display = 'table-row';}
-
-            function mostrarModificar(codigoArticuloModificar,nombreArticuloModificar,fabricanteArticuloModificar,descripcionArticuloModificar,precioCompraArticuloModificar,precioVentaArticuloModificar,stockArticuloModificar,categoriaArticuloModificar){
-                //Table-row es para que no meta todo en una misma columna
-            document.getElementById('modificar').style.display = 'table-row';
-            document.getElementById('codigoArticuloModificar').value = codigoArticuloModificar;
-            document.getElementById('nombreArticuloModificar').value = nombreArticuloModificar;
-            document.getElementById('fabricanteArticuloModificar').value = fabricanteArticuloModificar;
-            document.getElementById('descripcionArticuloModificar').value = descripcionArticuloModificar;
-            document.getElementById('precioCompraArticuloModificar').value = precioCompraArticuloModificar;
-            document.getElementById('precioVentaArticuloModificar').value = precioVentaArticuloModificar;
-            document.getElementById('stockArticuloModificar').value = stockArticuloModificar;
-            document.getElementById('categoriaArticuloModificar').value = categoriaArticuloModificar;
- 
-         }
-        </script> 
-        <script type="text/javascript">
-            function ocultarModificar(){//Table-row es para que no meta todo en una misma columna
-            document.getElementById('modificar').style.display = 'none';}
-        </script>
-        
-        <script type="text/javascript">
-            function ocultarAlta(){
-            document.getElementById('alta').style.display = 'none';}
-        </script> 
-      
     </head>
     <body style="background-color: #afa;">
         <%
@@ -267,7 +230,40 @@
                     
                     <button type="submit" onclick="ocultarEliminar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
             </div>
-            
+            <script>
+            function mostrarEliminar(codigoArticulo){ //Para borrar artículos
+                document.getElementById('oculto').style.display = 'block';
+                document.getElementById('codigoArticulo').value = codigoArticulo;
+            }
+
+            function ocultarEliminar(){
+                document.getElementById('oculto').style.display = 'none';}
+
+            function mostrarAlta(){//Table-row es para que no meta todo en una misma columna
+                document.getElementById('alta').style.display = 'table-row';}
+
+            function mostrarModificar(codigoArticuloModificar,nombreArticuloModificar,fabricanteArticuloModificar,descripcionArticuloModificar,precioCompraArticuloModificar,precioVentaArticuloModificar,stockArticuloModificar,categoriaArticuloModificar){
+                //Table-row es para que no meta todo en una misma columna
+                document.getElementById('modificar').style.display = 'table-row';
+                document.getElementById('codigoArticuloModificar').value = codigoArticuloModificar;
+                document.getElementById('nombreArticuloModificar').value = nombreArticuloModificar;
+                document.getElementById('fabricanteArticuloModificar').value = fabricanteArticuloModificar;
+                document.getElementById('descripcionArticuloModificar').value = descripcionArticuloModificar;
+                document.getElementById('precioCompraArticuloModificar').value = precioCompraArticuloModificar;
+                document.getElementById('precioVentaArticuloModificar').value = precioVentaArticuloModificar;
+                document.getElementById('stockArticuloModificar').value = stockArticuloModificar;
+                document.getElementById('categoriaArticuloModificar').value = categoriaArticuloModificar;
+ 
+            }
+       
+            function ocultarModificar(){//Table-row es para que no meta todo en una misma columna
+                document.getElementById('modificar').style.display = 'none';}
+       
+        
+      
+            function ocultarAlta(){
+                document.getElementById('alta').style.display = 'none';}
+        </script> 
 
     </body>
 </html>
