@@ -20,6 +20,5 @@
       s.close();
     %>	
     
-    <script>document.location = "gestion.jsp"</script> 
     </body>
 </html>

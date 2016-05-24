@@ -9,11 +9,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
         <LINK REL=StyleSheet HREF="estilosLogin.css" TYPE="text/css" MEDIA=screen>
-        <script type="text/javascript">
-            function f1(){
-                document.getElementById('oculto').style.display = 'block';
-            }
-        </script>
+        <link href='https://fonts.googleapis.com/css?family=Exo+2:500italic' rel='stylesheet' type='text/css'>
+        
     </head>
     <body>
         <%
@@ -23,6 +20,8 @@
         request.setCharacterEncoding("UTF-8");
         %>
     <div class="container">
+        <div style="text-align: center; margin-top:26px; color:#98FB98; font-size: 30px; 
+             font-family: 'Exo 2', sans-serif;">GESTIÓN TIENDA INFORMÁTICA <br></div>
         <div class="card card-container">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
@@ -67,5 +66,14 @@
             %>
         </div>
     </div>
+        <script>
+            function f1(){
+                document.getElementById('oculto').style.display = 'block';
+            }
+            
+        </script>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     </body>
 </html>
