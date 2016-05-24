@@ -20,6 +20,7 @@
         Class.forName("com.mysql.jdbc.Driver");
         Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/tienda_informatica","root", "root");
         Statement s = conexion.createStatement();
+        request.setCharacterEncoding("UTF-8");
         %>
     <div class="container">
         <div class="card card-container">
