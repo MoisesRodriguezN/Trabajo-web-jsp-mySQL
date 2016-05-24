@@ -11,23 +11,19 @@
         <title>Listado de artículos</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-        <script type="text/javascript">
-            function mostrar(codigoArticulo){
+      
+        <script>
+            function mostrarEliminar(codigoArticulo){ //Para borrar artículos
                 document.getElementById('oculto').style.display = 'block';
                 document.getElementById('codigoArticulo').value = codigoArticulo;
             }
-        </script>
-        <script type="text/javascript">
-            function ocultar(){
+
+            function ocultarEliminar(){
             document.getElementById('oculto').style.display = 'none';}
-        </script>  
-        
-        <script type="text/javascript">
-            function mostrarAñadir(){//Table-row es para que no meta todo en una misma columna
-            document.getElementById('añadir').style.display = 'table-row';}
-        </script> 
-        
-        <script type="text/javascript">
+
+            function mostrarAlta(){//Table-row es para que no meta todo en una misma columna
+            document.getElementById('alta').style.display = 'table-row';}
+
             function mostrarModificar(codigoArticuloModificar,nombreArticuloModificar,fabricanteArticuloModificar,descripcionArticuloModificar,precioCompraArticuloModificar,precioVentaArticuloModificar,stockArticuloModificar,categoriaArticuloModificar){
                 //Table-row es para que no meta todo en una misma columna
             document.getElementById('modificar').style.display = 'table-row';
@@ -48,8 +44,8 @@
         </script>
         
         <script type="text/javascript">
-            function ocultarAñadir(){
-            document.getElementById('añadir').style.display = 'none';}
+            function ocultarAlta(){
+            document.getElementById('alta').style.display = 'none';}
         </script> 
       
     </head>
@@ -81,12 +77,12 @@
                         <th class="text-center">Stock</th>  
                         <th> <!--Botón añadir que llama a la función mostrarAñadir-->
                             <form method="get" action="#">
-                                <button type="submit" onclick="mostrarAñadir()" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-plus"></span>Añadir</button>
+                                <button type="submit" onclick="mostrarAlta()" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-plus"></span>Añadir</button>
                             </form>
                         </th>
                     </tr> <!--Formulario de alta de artículos-->
-                    <form name="añadir" action="altaArticulo.jsp" method="get">
-                        <tr id="añadir" style="display: none;" class="warning">  <!--Formulario para añadir artículos-->
+                    <form name="alta" action="altaArticulo.jsp" method="get">
+                        <tr id="alta" style="display: none;" class="warning">  <!--Formulario para añadir artículos-->
                             <td>
                                 <input name="codigoArticulo" size="4" type="text">
                             </td>
@@ -131,7 +127,7 @@
                         
                     </form> 
                             <td>
-                                 <button type="submit" onclick="ocultarAñadir()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</button>
+                                 <button type="submit" onclick="ocultarAlta()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>Cancelar</button>
                             </td>
                         </tr><!--Fin formilario alta de artículo-->
                     <!--Formulario para añadir artículos-->
@@ -194,7 +190,7 @@
                 <!--Buscador de artículos-->
                 <form name="buscar" method="get" action="gestion.jsp">
                     Búsqueda: 
-                    <input type="text" name="buscar" placeholder="Nombre del Artículo...">
+                    <input type="text" name="buscar" pla ceholder="Nombre del Artículo...">
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
                 </form>
 
@@ -249,7 +245,7 @@
                         el codigo del articulo.-->
                         
                         <form method="get" action="#">
-                            <button type="submit" onclick="mostrar(<%=listado.getString("codigoArticulo") %>)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
+                            <button type="submit" onclick="mostrarEliminar(<%=listado.getString("codigoArticulo") %>)" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>
                         </form>
                 <%
                     }
@@ -269,7 +265,7 @@
                     <button style="margin-right: 90px;" type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Eliminar</button>   
                 </form>
                     
-                    <button type="submit" onclick="ocultar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
+                    <button type="submit" onclick="ocultarEliminar()" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
             </div>
             
 
