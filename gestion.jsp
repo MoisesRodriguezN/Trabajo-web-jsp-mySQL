@@ -153,7 +153,7 @@
                 <!--Buscador de artículos-->
                 <form name="buscar" method="get" action="gestion.jsp">
                     Búsqueda: 
-                    <input type="text" name="buscar" pla ceholder="Nombre del Artículo...">
+                    <input type="text" name="buscar" placeholder="Nombre del Artículo...">
                     <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Buscar</button>
                 </form>
 
